@@ -1,0 +1,15 @@
+/target
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-history
+/.nrepl-port
+.hgignore
+.hg/
+project.clj
+*.iml
+.markdown-preview.html

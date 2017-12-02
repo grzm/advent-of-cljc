@@ -13,8 +13,8 @@
   pom {:project     project
        :version     version
        :description "Advent of Code solutions"
-       :url         "https://github.com/yourname/com.grzm.advent-of-code"
-       :scm         {:url "https://github.com/yourname/com.grzm.advent-of-code"}
+       :url         "https://github.com/grzm/advent-of-cljc"
+       :scm         {:url "https://github.com/grzm/advent-of-cljc"}
        :license     {"MIT"
                      "https://opensource.org/licenses/MIT"}})
 

@@ -4,5 +4,4 @@
 
 (defn solve
   [rows]
-  (reduce (fn [ret row]
-            (+ ret (- (apply max row) (apply min row)))) 0 rows))
+  (transduce (map #(- (apply max %) (apply min %))) + rows))

@@ -9,5 +9,4 @@
 
 (defn solve
   [rows]
-  (reduce (fn [ret row]
-            (+ ret (evenly-divisible-quotient row))) 0 rows))
+  (transduce (map evenly-divisible-quotient) + rows))

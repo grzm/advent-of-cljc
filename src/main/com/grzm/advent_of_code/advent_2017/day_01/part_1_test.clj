@@ -6,8 +6,8 @@
 
 (deftest solve
   (are [ret s] (= ret (part-1/solve s))
-    3 "1122"
-    4 "1111"
-    0 "1234"
-    9 "91212129"
-    1175  data/input))
+    3    "1122"
+    4    "1111"
+    0    "1234"
+    9    "91212129"
+    1175 data/input))

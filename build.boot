@@ -10,13 +10,13 @@
                             [tubular "1.1.1" :scope "test"]])
 
 (task-options!
- pom {:project     project
-      :version     version
-      :description "Advent of Code solutions"
-      :url         "https://github.com/yourname/com.grzm.advent-of-code"
-      :scm         {:url "https://github.com/yourname/com.grzm.advent-of-code"}
-      :license     {"MIT"
-                    "https://opensource.org/licenses/MIT"}})
+  pom {:project     project
+       :version     version
+       :description "Advent of Code solutions"
+       :url         "https://github.com/yourname/com.grzm.advent-of-code"
+       :scm         {:url "https://github.com/yourname/com.grzm.advent-of-code"}
+       :license     {"MIT"
+                     "https://opensource.org/licenses/MIT"}})
 
 (deftask build
   "Build and install the project locally."
@@ -24,9 +24,7 @@
   (comp (pom) (jar) (install)))
 
 (require '[adzerk.boot-test :refer [test]])
+(require '[metosin.boot-alt-test :refer [alt-test]])
 
 (require 'boot.lein)
 (boot.lein/generate)
-
-(require '[metosin.boot-alt-test :refer [alt-test]])
-

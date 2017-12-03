@@ -18,8 +18,9 @@
   (loop [[n & r :as paths] day-03/location-paths
          [l :as seen]      (list {:loc [0 0] :val 1})]
     (let [xy             (day-03/vector-add n (:loc l))
-          seen-surrounds (filter #((surrounds xy) (:loc %)) seen)
-          val            (transduce (map :val) + seen-surrounds)]
+          val            (transduce (comp
+                                      (filter #((surrounds xy) (:loc %)))
+                                      (map :val)) + seen)]
       (if (> val input)
         val
         (recur r (conj seen {:loc xy :val val}))))))

@@ -2,15 +2,10 @@
   (:require
    [com.grzm.advent-of-code.advent-2017.day-03 :as day-03]))
 
-(defn vector-add
-  ([] [0 0])
-  ([ret] ret)
-  ([[x y] [x' y']] [(+ x x') (+ y y')]))
-
 (defn solve
   [location]
   (->> day-03/location-paths
-       (transduce (take (dec location)) vector-add)
+       (transduce (take (dec location)) day-03/vector-add)
        (transduce (map #?(:clj #(Math/abs %)
                           :cljs #(.abs js/Math %))) +)))
 

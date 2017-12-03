@@ -6,4 +6,7 @@
 
 (deftest solve
   (are [expected input] (= expected (part-2/solve input))
+    122 60
+    11  10
+    330 320
     349975 data/input))

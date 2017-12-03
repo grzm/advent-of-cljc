@@ -2,5 +2,4 @@
 
 (def x-form
   (comp (filter (partial apply =))
-        (map first)
-        (map #(- (int %) 48))))
+        (map first)))

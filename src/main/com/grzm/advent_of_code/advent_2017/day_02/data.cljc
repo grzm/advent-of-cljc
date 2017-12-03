@@ -22,5 +22,6 @@
 
 (defn parse [s]
   (mapv (fn [line]
-          (mapv #(Integer/parseInt %) (re-seq #"\d+" line)))
+          (mapv #?(:clj #(Integer/parseInt %)
+                   :cljs #(js/parseInt %)) (re-seq #"\d+" line)))
         (str/split-lines s)))

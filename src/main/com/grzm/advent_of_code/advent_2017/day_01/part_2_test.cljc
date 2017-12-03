@@ -5,7 +5,7 @@
    [com.grzm.advent-of-code.advent-2017.day-01.part-2 :as part-2]))
 
 (deftest solve
-  (are [ret s] (= ret (part-2/solve s))
+  (are [ret s] (= ret (part-2/solve (data/parse s)))
     6    "1212"
     0    "1221"
     4    "123425"

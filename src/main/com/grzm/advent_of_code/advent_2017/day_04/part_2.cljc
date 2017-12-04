@@ -10,7 +10,8 @@
        frequencies
        vals
        (filter #(< 1 %))
-       seq boolean))
+       seq
+       boolean))
 
 (defn valid-passphrase?
   [s]

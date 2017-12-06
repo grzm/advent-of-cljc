@@ -19,13 +19,10 @@
 (defn redistribute
   [locs]
   (let [[i ops] (init locs)]
-    (loop [ops   ops
-           locs' (assoc locs i 0)]
-      (if (seq ops)
-        (let [[op & ops'] ops]
-          (recur ops'
-                 (update-in locs' [(first op)] #(+ (second op) %))))
-        locs'))))
+    (reduce (fn [ret [i op]]
+              (update-in ret [i] #(+ op %)))
+            (assoc locs i 0)
+            ops)))
 
 (defn solve
   ([]

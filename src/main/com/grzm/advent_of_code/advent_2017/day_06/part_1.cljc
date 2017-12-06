@@ -4,15 +4,14 @@
    [clojure.test :refer [deftest are is]]
    [com.grzm.advent-of-code.advent-2017.day-06.data :as data]))
 
-(defn max-index [locs]
-  (let [m (apply max locs)
-        i (->> (map vector (range) locs)
-               (drop-while #(< (second %) m))
-               ffirst)]
-    [m i]))
+(defn max-index
+  [locs]
+  (->> (map vector (range) locs)
+       reverse
+       (apply max-key second)))
 
 (defn init [locs]
-  (let [[m i] (max-index locs)]
+  (let [[i m] (max-index locs)]
     [i (->> (map vector (drop (inc i) (cycle (range (count locs)))) (repeat m 1))
             frequencies
             (map #(vector (ffirst %) (second %))))]))

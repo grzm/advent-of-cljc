@@ -1,8 +1,8 @@
 (ns com.grzm.advent-of-code.advent-2017.day-06.part-2
   (:require
    [clojure.string :as str]
-   [com.grzm.advent-of-code.advent-2017.day-06.data :as data]
-   [com.grzm.advent-of-code.advent-2017.day-06.part-1 :as part-1]))
+   [com.grzm.advent-of-code.advent-2017.day-06.core :as core]
+   [com.grzm.advent-of-code.advent-2017.day-06.data :as data]))
 
 (defn solve
   ([]
@@ -15,7 +15,7 @@
        (- steps seen-steps)
        (recur (inc steps)
               (conj seen {locs steps})
-              (part-1/redistribute locs))))))
+              (core/redistribute locs))))))
 (comment
   (solve)
 

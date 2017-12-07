@@ -2,6 +2,10 @@
 
 [Advent of Code](http://adventofcode.com) in Clojure(Script)
 
+## 2017 Goals
+ - Write cljc code
+ - Use transducers where appropriate
+
 ## Testing
 
 ### Clojure (JVM)

@@ -15,21 +15,22 @@
 (defn find-balance [subprocs]
   (let [;; this is some of the deepest destructuring I've done
         [[_ [{:keys [weight subweight] :as singleton} & _]] [common-weight _]]
-        (sort-by (fn [[_ v]] (count v)) (group-by :subweight subprocs))]
+        (sort-by #(count (second %)) (group-by :subweight subprocs))]
     (+ weight (- common-weight subweight))))
 
 (defn subweights
   [proc-map proc-name]
-  (let [{:keys [proc subprocs weight] :as p} (get proc-map proc-name)]
-    (if (seq subprocs)
-      (let [ss  (map #(subweights proc-map %) subprocs)
-            ssw (map :subweight ss)]
-        (when-not (apply = ssw)
-          (let [weights (group-by :subweight ss)]
-            (throw (ex-info "we're unbalanced"
-                            {:balance (find-balance ss)}))))
-        (assoc p :subweight (+ weight (apply + ssw)) :balanced? (apply = ssw)))
-      (assoc p :subweight weight :balanced? true))))
+  (let [{:keys [proc subprocs weight] :as p} (get proc-map proc-name)
+        subweight (if (seq subprocs)
+                    (let [ss  (map #(subweights proc-map %) subprocs)
+                          ssw (map :subweight ss)]
+                      (when-not (apply = ssw)
+                        (let [weights (group-by :subweight ss)]
+                          (throw (ex-info "we're unbalanced"
+                                          {:balance (find-balance ss)}))))
+                      (+ weight (apply + ssw)))
+                    weight)]
+    (assoc p :subweight subweight)))
 
 (defn solve
   ([]

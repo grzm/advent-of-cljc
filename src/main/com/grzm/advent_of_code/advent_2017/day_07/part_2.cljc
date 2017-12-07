@@ -13,42 +13,33 @@
             (assoc proc-map proc m)) {} procs))
 
 (defn find-balance [subprocs]
-  (let [weights (group-by :subweight subprocs)
-
-        ;; this is some of the deepest destructuring I've done
+  (let [;; this is some of the deepest destructuring I've done
         [[_ [{:keys [weight subweight] :as singleton} & _]] [common-weight _]]
-        (sort-by (fn [[_ v]] (count v)) weights)]
+        (sort-by (fn [[_ v]] (count v)) (group-by :subweight subprocs))]
     (+ weight (- common-weight subweight))))
 
 (defn subweights
-  ([proc-map proc-name]
-   (subweights (atom {}) proc-map proc-name))
-  ([memo proc-map proc-name]
-   (let [{:keys [proc subprocs weight]
-          :as   p} (get proc-map proc-name)
-         new-p     (if (seq subprocs)
-                     (let [ss        (map #(subweights memo proc-map %) subprocs)
-                           ssw       (map :subweight ss)
-                           balanced? (apply = ssw)]
-                       (when-not balanced?
-                         (let [weights (group-by :subweight ss)]
-                           (throw (ex-info "we're unbalanced"
-                                           {:balance (find-balance ss)}))))
-                       (assoc p :subweight (+ weight (apply + ssw)) :balanced? (apply = ssw)))
-                     (assoc p :subweight weight :balanced? true))]
-     (swap! memo assoc proc-name new-p)
-     new-p)))
+  [proc-map proc-name]
+  (let [{:keys [proc subprocs weight] :as p} (get proc-map proc-name)]
+    (if (seq subprocs)
+      (let [ss  (map #(subweights proc-map %) subprocs)
+            ssw (map :subweight ss)]
+        (when-not (apply = ssw)
+          (let [weights (group-by :subweight ss)]
+            (throw (ex-info "we're unbalanced"
+                            {:balance (find-balance ss)}))))
+        (assoc p :subweight (+ weight (apply + ssw)) :balanced? (apply = ssw)))
+      (assoc p :subweight weight :balanced? true))))
 
 (defn solve
   ([]
    (solve data/input))
   ([input]
    (let [procs (core/parse input)
-         p-map (make-proc-map procs)
-         root  (part-1/solve* procs)
-         memo  (atom {})]
+         proc-map (make-proc-map procs)
+         root  (part-1/solve* procs)]
      (:balance (try
-                 (subweights  p-map root)
+                 (subweights proc-map root)
                  #?(:clj (catch ExceptionInfo e
                            (ex-data e))
                     :cljs (catch js/Error e

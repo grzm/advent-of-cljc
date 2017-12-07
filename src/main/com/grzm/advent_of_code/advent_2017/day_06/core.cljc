@@ -3,8 +3,10 @@
 (defn max-index
   [locs]
   (->> (map vector (range) locs)
-       reverse
-       (apply max-key second)))
+       (reduce (fn [[_ max-val :as m]
+                    [_ cur-val :as c]]
+                 (if (> cur-val max-val)
+                   c m)))))
 
 (defn init [locs]
   (let [[i m] (max-index locs)]

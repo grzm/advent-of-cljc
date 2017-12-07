@@ -5,7 +5,8 @@
    [com.grzm.advent-of-code.advent-2017.day-07.core :as core]
    [com.grzm.advent-of-code.advent-2017.day-07.data :as data]
    [com.grzm.advent-of-code.advent-2017.day-07.part-1 :as part-1])
-  (:import (clojure.lang ExceptionInfo)))
+  #?(:clj (:import
+           (clojure.lang ExceptionInfo))))
 
 (defn make-proc-map [procs]
   (reduce (fn [proc-map {:keys [proc weight] :as m}]
@@ -48,8 +49,10 @@
          memo  (atom {})]
      (:balance (try
                  (subweights  p-map root)
-                 (catch ExceptionInfo e
-                   (ex-data e)))))))
+                 #?(:clj (catch ExceptionInfo e
+                           (ex-data e))
+                    :cljs (catch js/Error e
+                            (ex-data e))))))))
 
 (comment
   (def mini-input "pbga (66)

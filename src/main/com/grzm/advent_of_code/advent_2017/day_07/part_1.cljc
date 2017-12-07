@@ -3,8 +3,7 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [com.grzm.advent-of-code.advent-2017.day-07.core :as core]
-   [com.grzm.advent-of-code.advent-2017.day-07.data :as data]
-   [criterium.core :refer [quick-bench]]))
+   [com.grzm.advent-of-code.advent-2017.day-07.data :as data]))
 
 ;; has children, and doesn't appear in a child list
 (defn solve*

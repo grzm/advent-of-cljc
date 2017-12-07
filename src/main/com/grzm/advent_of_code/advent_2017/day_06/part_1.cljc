@@ -2,7 +2,9 @@
   (:require
    [clojure.string :as str]
    [com.grzm.advent-of-code.advent-2017.day-06.core :as core]
-   [com.grzm.advent-of-code.advent-2017.day-06.data :as data]))
+   [com.grzm.advent-of-code.advent-2017.day-06.data :as data]
+   #?(:clj
+      [criterium.core :refer [quick-bench]])))
 
 (defn solve
   ([]
@@ -17,6 +19,9 @@
               (conj seen locs)
               (core/redistribute locs))))))
 
-(comment
-  (solve)
-  )
+#?(:clj
+   (comment
+     (solve)
+     (require '[criterium.core :refer [quick-bench]])
+     (quick-bench (solve))
+     ))

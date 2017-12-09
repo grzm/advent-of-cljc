@@ -12,13 +12,13 @@
     {:state :group, :depth 2, :count 3, :c \{}
 
     [{:state :group} \<]
-    {:state :garbage, :garbage 0, :c \<}
+    {:state :garbage, :c \<}
 
-    [{:state :garbage} \}]
-    {:state :garbage, :garbage 0, :c \}}
+    [{:state :garbage, :garbage 0} \}]
+    {:state :garbage, :garbage 1 :c \}}
 
     [{:state :garbage} \!]
-    {:state :ignore, :garbage 0, :c \!}
+    {:state :ignore, :c \!}
 
     [{:state :garbage} \>]
     {:state :group, :c \>}

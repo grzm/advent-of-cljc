@@ -1,7 +1,4 @@
-(ns com.grzm.advent-of-code.advent-2017.day-09.core
-  (:require
-   [clojure.string :as str]
-   ))
+(ns com.grzm.advent-of-code.advent-2017.day-09.core)
 
 ;; assuming data is well-formed
 ;; states :init :group :garbage :ignore :done
@@ -41,17 +38,19 @@
          (assoc state :state :done :depth 0 :c c)
          (-> (update state :depth dec)
              (assoc :c c)))
-    \< (assoc state :state :garbage)
-    \, state
+    \< (assoc state :state :garbage, :c c)
+    \, (assoc state :c c)
     :else (throw-invalid-transition state c)))
 
 (defmethod p* :garbage
   [state c]
   (condp = c
-    \! (assoc state :state :ignore, :c \!)
-    \> (assoc state :state :group, :c \>)
-    (update state :garbage inc)))
+    \! (assoc state :state :ignore, :c c)
+    \> (assoc state :state :group, :c c)
+    (-> state
+        (update :garbage inc)
+        (assoc :c c))))
 
 (defmethod p* :ignore
   [state c]
-  (assoc state :state :garbage))
+  (assoc state :state :garbage, :c c))

@@ -4,7 +4,7 @@
    [com.grzm.advent-of-code.advent-2017.day-09.core :as core]))
 
 (deftest p*-test
-  (are [input expected] (= expected (apply core/p* input))
+  (are [input expected] (= expected (apply core/p-case input))
     [{:state :init} \{]
     {:state :group, :depth 1, :count 1, :garbage 0, :c \{}
 

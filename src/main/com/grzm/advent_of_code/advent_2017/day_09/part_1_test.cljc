@@ -29,7 +29,7 @@
     3 "{{<a!>},{<a!>},{<a!>},{<ab>}}"))
 
 (comment
-  (reductions core/p* {:state :init} (seq "{{},{}}"))
+  (reductions core/p-case {:state :init} (seq "{{},{}}"))
   ({:state :init}
    {:state :group, :depth 1, :count 1, :c \{}
    {:state :group, :depth 2, :count 3, :c \{}

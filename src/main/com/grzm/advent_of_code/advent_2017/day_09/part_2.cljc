@@ -19,5 +19,11 @@
 
   (solve)
   (quick-bench (solve))
+  ;; Evaluation count : 90 in 6 samples of 15 calls.
+  ;; Execution time mean : 7.536217 ms
+  ;; Execution time std-deviation : 1.035529 ms
+  ;; Execution time lower quantile : 6.335756 ms ( 2.5%)
+  ;; Execution time upper quantile : 8.943154 ms (97.5%)
+  ;; Overhead used : 2.241341 ns
 
   )

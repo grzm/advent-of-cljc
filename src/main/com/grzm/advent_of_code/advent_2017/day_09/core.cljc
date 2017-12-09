@@ -10,23 +10,21 @@
   (throw (ex-info "invalid state transition"
                   {:state state, :c c})))
 
-(defn p*-dispatch [state c]
-  (:state state))
+;; using condp
+(defmulti p-condp (fn [state c] (:state state)))
 
-(defmulti p* p*-dispatch)
-
-(defmethod p* :default
+(defmethod p-condp :default
   [state c]
   (throw (ex-info "unknown state"
                   {:state state, :c c})))
 
-(defmethod p* :init
+(defmethod p-condp :init
   [state c]
   (if (= c \{)
     (assoc state :state :group, :depth 1, :count 1, :garbage 0, :c c)
     (throw-invalid-transition state c)))
 
-(defmethod p* :group
+(defmethod p-condp :group
   [state c]
   (condp = c
     \{ (let [depth (:depth state)]
@@ -40,17 +38,103 @@
              (assoc :c c)))
     \< (assoc state :state :garbage, :c c)
     \, (assoc state :c c)
-    :else (throw-invalid-transition state c)))
+    ;; :else
+    (throw-invalid-transition state c)))
 
-(defmethod p* :garbage
+(defmethod p-condp :garbage
   [state c]
   (condp = c
     \! (assoc state :state :ignore, :c c)
     \> (assoc state :state :group, :c c)
+    ;; :else
     (-> state
         (update :garbage inc)
         (assoc :c c))))
 
-(defmethod p* :ignore
+(defmethod p-condp :ignore
   [state c]
   (assoc state :state :garbage, :c c))
+
+
+;; using case, as we have constant comparisons
+(defmulti p-case (fn [state c] (:state state)))
+
+(defmethod p-case :default
+  [state c]
+  (throw (ex-info "unknown state"
+                  {:state state, :c c})))
+
+(defmethod p-case :init
+  [state c]
+  (case c
+    \{ (assoc state :state :group, :depth 1, :count 1, :garbage 0, :c c)
+    (throw-invalid-transition state c)))
+
+(defmethod p-case :group
+  [state c]
+  (case c
+    \{ (let [depth (:depth state)]
+         (-> state
+             (update :depth inc)
+             (update :count #(+ (inc depth) %))
+             (assoc :c c)))
+    \} (if (= 1 (:depth state))
+         (assoc state :state :done :depth 0 :c c)
+         (-> (update state :depth dec)
+             (assoc :c c)))
+    \< (assoc state :state :garbage, :c c)
+    \, (assoc state :c c)
+    ;; :else
+    (throw-invalid-transition state c)))
+
+(defmethod p-case :garbage
+  [state c]
+  (case c
+    \! (assoc state :state :ignore, :c c)
+    \> (assoc state :state :group, :c c)
+    ;; :else
+    (-> state
+        (update :garbage inc)
+        (assoc :c c))))
+
+(defmethod p-case :ignore
+  [state c]
+  (assoc state :state :garbage, :c c))
+
+
+;; one big switch statement
+
+(defn p-all-case
+  [{:keys [state depth] :as s} c]
+  (case state
+    :init (case c
+           \{ (assoc state :state :group, :depth 1, :count 1, :garbage 0, :c c)
+           (throw-invalid-transition state c))
+
+    :group (case c
+             \{ (let [depth (:depth state)]
+                  (-> state
+                      (update :depth inc)
+                      (update :count #(+ (inc depth) %))
+                      (assoc :c c)))
+             \} (if (= 1 (:depth state))
+                  (assoc state :state :done :depth 0 :c c)
+                  (-> (update state :depth dec)
+                      (assoc :c c)))
+             \< (assoc state :state :garbage, :c c)
+             \, (assoc state :c c)
+             ;; :else
+             (throw-invalid-transition state c))
+
+    :garbage (case c
+               \! (assoc state :state :ignore, :c c)
+               \> (assoc state :state :group, :c c)
+               ;; :else
+               (-> state
+                   (update :garbage inc)
+                   (assoc :c c)))
+
+    :ignore   (assoc state :state :garbage, :c c)
+
+    ;; :else
+    (throw-invalid-transition state c)))

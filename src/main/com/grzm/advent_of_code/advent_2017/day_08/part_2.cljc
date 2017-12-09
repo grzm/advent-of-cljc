@@ -3,7 +3,8 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [com.grzm.advent-of-code.advent-2017.day-08.core :as core]
-   [com.grzm.advent-of-code.advent-2017.day-08.data :as data]))
+   [com.grzm.advent-of-code.advent-2017.day-08.data :as data]
+   #?(:clj [criterium.core :refer [quick-bench]])))
 
 (defn solve
   ([]
@@ -23,5 +24,6 @@
 
   (solve sample)
   (solve)
+  (quick-bench (solve))
 
   )

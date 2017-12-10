@@ -2,7 +2,6 @@
   (:require
    [clojure.set :as set]
    [clojure.string :as str]
-   [com.grzm.advent-of-code.advent-2017.day-10.core :as core]
    [com.grzm.advent-of-code.advent-2017.day-10.data :as data]
    [com.grzm.advent-of-code.advent-2017.util :as util]))
 

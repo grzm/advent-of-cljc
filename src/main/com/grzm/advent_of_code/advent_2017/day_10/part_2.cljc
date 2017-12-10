@@ -3,7 +3,8 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [com.grzm.advent-of-code.advent-2017.day-10.data :as data]
-   [com.grzm.advent-of-code.advent-2017.day-10.part-1 :as part-1]))
+   [com.grzm.advent-of-code.advent-2017.day-10.part-1 :as part-1]
+   #?(:clj [criterium.core :refer [quick-bench]])))
 
 (defn char-code [c]
   #?(:clj (int c)
@@ -52,4 +53,11 @@
 
 (comment
   (solve)
+  (quick-bench (solve))
+  ;; Evaluation count : 6 in 6 samples of 1 calls.
+  ;; Execution time mean : 213.528544 ms
+  ;; Execution time std-deviation : 11.776479 ms
+  ;; Execution time lower quantile : 198.027305 ms ( 2.5%)
+  ;; Execution time upper quantile : 225.176068 ms (97.5%)
+  ;; Overhead used : 2.241341 ns
   )

@@ -17,3 +17,17 @@
     0 "ne,ne,sw,sw"
     2 "ne,ne,s,s"
     3 "se,sw,se,sw,sw"))
+
+(deftest cube-pos
+  (are [expected input] (= expected (part-1/cube-pos (part-1/parse input)))
+    [3 0 -3] "ne,ne,ne"
+    [0 0 0] "ne,ne,sw,sw"
+    [2 -2 0] "ne,ne,s,s"
+    [-1 -2 3] "se,sw,se,sw,sw"))
+
+(deftest solve-cube
+  (are [expected input] (= expected (part-1/solve-cube input))
+    3 "ne,ne,ne"
+    0 "ne,ne,sw,sw"
+    2 "ne,ne,s,s"
+    3 "se,sw,se,sw,sw"))

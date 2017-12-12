@@ -55,7 +55,7 @@
 (comment
   (part-1) ;; 378
   (part-2 sample-input)
-  (part-2 data/input)
+  (part-2)
 
   (quick-bench (part-1))
   ;; Evaluation count : 108 in 6 samples of 18 calls.
@@ -66,12 +66,13 @@
   ;; Overhead used : 1.870143 ns
 
   (quick-bench (part-2))
-  ;; Evaluation count : 108 in 6 samples of 18 calls.
-  ;; Execution time mean : 5.738449 ms
-  ;; Execution time std-deviation : 225.077823 µs
-  ;; Execution time lower quantile : 5.429169 ms ( 2.5%)
-  ;; Execution time upper quantile : 5.955487 ms (97.5%)
+  ;; Evaluation count : 24 in 6 samples of 4 calls.
+  ;; Execution time mean : 25.867529 ms
+  ;; Execution time std-deviation : 824.721283 µs
+  ;; Execution time lower quantile : 24.860822 ms ( 2.5%)
+  ;; Execution time upper quantile : 26.824030 ms (97.5%)
   ;; Overhead used : 1.870143 ns
+
 
   (def sample-input "0 <-> 2
   1 <-> 1

@@ -1,7 +1,7 @@
 (def project 'com.grzm.advent-of-code)
 (def version "0.1.0-SNAPSHOT")
 
-(set-env! :resource-paths #{"resources" "src/main"}
+(set-env! :resource-paths #{"src/main"}
           :dependencies   '[[adzerk/boot-cljs "2.1.4" :scope "test"]
                             [adzerk/boot-test "RELEASE" :scope "test"]
                             [crisptrutski/boot-cljs-test "0.3.5-SNAPSHOT" :scope "test"]

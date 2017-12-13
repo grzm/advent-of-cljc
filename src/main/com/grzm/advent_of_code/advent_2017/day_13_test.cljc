@@ -13,3 +13,6 @@
 
 (deftest part-2-test
   (is (= 10 (day-13/part-2 sample-input))))
+
+(deftest part-2-test
+  (is (= 10 (day-13/part-2* sample-input))))

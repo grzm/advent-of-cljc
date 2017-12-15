@@ -32,3 +32,9 @@
 
 (require 'boot.lein)
 (boot.lein/generate)
+
+(task-options!
+  alt-test {:test-matcher #".*"})
+
+(task-options!
+  test-cljs {:namespaces #{#".*"}})
